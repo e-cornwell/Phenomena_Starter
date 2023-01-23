@@ -58,7 +58,7 @@ describe('Database', () => {
         }));
       });
     });
-    xdescribe('getOpenReports', () => {
+    describe('getOpenReports', () => {
       beforeAll(async() => {
         await client.query(`
           INSERT INTO comments("reportId", content)

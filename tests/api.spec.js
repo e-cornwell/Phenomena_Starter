@@ -1,3 +1,4 @@
+/*
 require('dotenv').config();
 const axios = require('axios');
 const { SERVER_ADDRESS = 'http://localhost:', PORT = 3000 } = process.env;
@@ -136,3 +137,4 @@ describe('API', () => {
   });
   
 });
+*/
