@@ -1,15 +1,6 @@
 const pg = require('pg')
 
 const client = new pg.Client(process.env.DATABASE_URL || 'postgres://localhost:5432/phenomena-dev')
-// Require the Client constructor from the pg package
-
-
-// Create a constant, CONNECTION_STRING, from either process.env.DATABASE_URL or postgres://localhost:5432/phenomena-dev
-
-// Create the client using new Client(CONNECTION_STRING)
-
-
-// Do not connect to the client in this file!
 
 /**
  * Report Related Methods
@@ -25,52 +16,48 @@ const client = new pg.Client(process.env.DATABASE_URL || 'postgres://localhost:5
  */
 async function getOpenReports() {
   try {
-      const { rows } = await client.query(`
-        SELECT id,title, location, description, password ,isOpen,expirationDate
-        FROM reports;
+      const { rows: reports } = await client.query(`
+        SELECT *
+        FROM reports
+        WHERE reports."isOpen" = 'true';
       `);
+
+      const { rows: comments } = await client.query(`
+        SELECT *
+        FROM comments
+        WHERE "reportId" IN (${
+          reports.map(report => report.id).join(', ')
+        });
+      `)
+      reports.forEach(report => {
+          report.comments = comments.filter(comment => comment.reportId === report.id); 
+          report.isExpired = Date.parse(report.expirationDate) < new Date();
+          delete report.password;
+        }
+      )
+      
+      return reports;
   
-      return rows;
-    
-  
-  
-    // first load all of the reports which are open
-    
+      // first load all of the reports which are open
+      
+      // then load the comments only for those reports, using a
+      // WHERE "reportId" IN () clause
 
-    // then load the comments only for those reports, using a
-    // WHERE "reportId" IN () clause
+      // then, build two new properties on each report:
+      // .comments for the comments which go with it
+      //    it should be an array, even if there are none
+      // .isExpired if the expiration date is before now
+      //    you can use Date.parse(report.expirationDate) < new Date()
+      // also, remove the password from all reports
 
-    
-    // then, build two new properties on each report:
-    // .comments for the comments which go with it
-    //    it should be an array, even if there are none
-    // .isExpired if the expiration date is before now
-    //    you can use Date.parse(report.expirationDate) < new Date()
-    // also, remove the password from all reports
-
-
-    // finally, return the reports
-  
-
+      // finally, return the reports
   } catch (error) {
     throw error;
   }
 }
 
-/**
- * You should use the reportFields parameter (which is
- * an object with properties: title, location, description, password)
- * to insert a new row into the reports table.
- * 
- * On success, you should return the new report object,
- * and on failure you should throw the error up the stack.
- * 
- * Make sure to remove the password from the report object
- * before returning it.
- */
 async function createReport(reportFields) {
   const { title, location, description, password } = reportFields;
-
 
   try {
     const SQL = `
@@ -83,21 +70,13 @@ async function createReport(reportFields) {
     const report = response.rows[0];
     delete report.password
     return report
-    
-    // insert the correct fields into the reports table
-    // remember to return the new row from the query
-    
-
-    // remove the password from the returned row
-    
-
-    // return the new report
-    
 
   } catch (error) {
     throw error;
   }
 }
+
+
 
 /**
  * NOTE: This function is not for use in other files, so we use an _ to
