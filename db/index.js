@@ -6,14 +6,6 @@ const client = new pg.Client(process.env.DATABASE_URL || 'postgres://localhost:5
  * Report Related Methods
  */
 
-/**
- * You should select all reports which are open. 
- *  
- * Additionally you should fetch all comments for these
- * reports, and add them to the report objects with a new field, comments.
- * 
- * Lastly, remove the password field from every report before returning them all.
- */
 async function getOpenReports() {
   try {
       const { rows: reports } = await client.query(`
@@ -36,21 +28,8 @@ async function getOpenReports() {
         }
       )
       
-      return reports;
-  
-      // first load all of the reports which are open
-      
-      // then load the comments only for those reports, using a
-      // WHERE "reportId" IN () clause
+    return reports;
 
-      // then, build two new properties on each report:
-      // .comments for the comments which go with it
-      //    it should be an array, even if there are none
-      // .isExpired if the expiration date is before now
-      //    you can use Date.parse(report.expirationDate) < new Date()
-      // also, remove the password from all reports
-
-      // finally, return the reports
   } catch (error) {
     throw error;
   }
