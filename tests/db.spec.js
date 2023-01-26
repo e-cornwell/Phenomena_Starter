@@ -113,7 +113,7 @@ describe('Database', () => {
       });
       
     })
-    xdescribe('closeReport', () => {
+    describe('closeReport', () => {
       let message, report;
       beforeAll(async() => {
       })
