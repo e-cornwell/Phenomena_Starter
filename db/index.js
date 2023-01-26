@@ -13,6 +13,7 @@ async function getOpenReports() {
         FROM reports
         WHERE reports."isOpen" = 'true';
       `);
+      
 
       const { rows: comments } = await client.query(`
         SELECT *
@@ -55,37 +56,15 @@ async function createReport(reportFields) {
   }
 }
 
-
-
-/**
- * NOTE: This function is not for use in other files, so we use an _ to
- * remind us that it is only to be used internally.
- * (for our testing purposes, though, we WILL export it)
- * 
- * It is used in both closeReport and createReportComment, below.
- * 
- * This function should take a reportId, select the report whose 
- * id matches that report id, and return it. 
- * 
- * This should return the password since it will not eventually
- * be returned by the API, but instead used to make choices in other
- * functions.
- */
 async function _getReport(reportId) {
   try {
-    const { rows: [ report ] } = await client.query(`
-      SELECT id, username
+    const { rows: [report] } = await client.query(`
+      SELECT id
       FROM reports
-      WHERE id=${ reportId }
-    `);
-
+      WHERE id=$1
+    `, [reportId]);
+    
     return report;
-
-    // SELECT the report with id equal to reportId
-    
-
-    // return the report
-    
 
   } catch (error) {
     throw error;
