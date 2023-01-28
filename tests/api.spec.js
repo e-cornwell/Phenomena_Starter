@@ -1,4 +1,4 @@
-/*
+
 require('dotenv').config();
 const axios = require('axios');
 const { SERVER_ADDRESS = 'http://localhost:', PORT = 3000 } = process.env;
@@ -75,7 +75,7 @@ describe('API', () => {
       expect(singleReportResponse.location).toEqual(singleReportQueried.location);
     });
   });
-  describe('POST request for /api/reports', () => {
+  xdescribe('POST request for /api/reports', () => {
     beforeAll(async() => {
     })
     it('on caught error, call next(error), which sends back a 500 error', async () => {
@@ -88,7 +88,7 @@ describe('API', () => {
       expect(postedReportResponse.description).toBe(reportToPost.description);
     });
   });
-  describe('POST request for /api/reports/:reportId/comments', () => {
+  xdescribe('POST request for /api/reports/:reportId/comments', () => {
     beforeAll(async() => {
     })
     it('on caught error, call next(error), which sends back a 500 error', async () => {
@@ -101,7 +101,7 @@ describe('API', () => {
       expect(postedCommentResponse.content).toBe(commentFieldsToPost.content);
     });
   });
-  describe('DELETE request for /api/reports/:reportId', () => {
+  xdescribe('DELETE request for /api/reports/:reportId', () => {
     let deleteResponse;
     beforeAll(async() => {
     })
@@ -128,7 +128,7 @@ describe('API', () => {
       expect(deleteResponse).toEqual({message: 'Report successfully closed!'});
     });
   });
-  describe('Properly handles Not Found requests', () => {
+  xdescribe('Properly handles Not Found requests', () => {
     beforeAll(async() => {
     })
     it('Sends back 404 not found', async () => {
@@ -137,4 +137,4 @@ describe('API', () => {
   });
   
 });
-*/
+
