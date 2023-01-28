@@ -144,7 +144,7 @@ describe('Database', () => {
         expect(message).toEqual({message: "Report successfully closed!"});
       });
     })
-    xdescribe('createReportComment', () => {
+    describe('createReportComment', () => {
       const commentFields = {content: 'something strange is happening in this galaxy, for sure'}
       const password = 'DontWatchTooLong';
       
