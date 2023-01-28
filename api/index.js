@@ -22,10 +22,10 @@ const {
 apiRouter.get('/reports', async (req, res, next) => {
     try {
       const reports = await getOpenReports();
-      console.log(reports)
-      res.send(
-        reports
-      );
+      
+      res.send({
+        reports: reports
+      });
     } catch (error) {
       next({
         name:'Failed to getOpenReports',
