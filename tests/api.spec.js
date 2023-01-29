@@ -88,7 +88,7 @@ describe('API', () => {
       expect(postedReportResponse.description).toBe(reportToPost.description);
     });
   });
-  xdescribe('POST request for /api/reports/:reportId/comments', () => {
+  describe('POST request for /api/reports/:reportId/comments', () => {
     beforeAll(async() => {
     })
     it('on caught error, call next(error), which sends back a 500 error', async () => {

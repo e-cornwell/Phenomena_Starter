@@ -42,7 +42,7 @@ apiRouter.get('/reports', async (req, res, next) => {
  * - on success, it should send back the object returned by createReport
  * - on caught error, call next(error)
  */
-apiRouter.post('/reports', async (req, res, next) => {
+apiRouter.post('/reports', async (req, res, next) => { 
   try {
     const report = await createReport(req.body);
     res.send(report);
@@ -50,6 +50,27 @@ apiRouter.post('/reports', async (req, res, next) => {
     next(error)
   }
 });
+
+/**
+ * Set up a POST request for /reports/:reportId/comments
+ *
+ * - it should use an async function
+ * - it should await a call to createReportComment, passing in the reportId and
+ *   the fields from req.body
+ * - on success, it should send back the object returned by createReportComment
+ * - on caught error, call next(error)
+ */
+apiRouter.post(`/reports/:reportId/comments`, async (req, res, next) => {
+    const { reportId } = req.params;
+    
+  try {
+    const comment = await createReportComment(reportId, req.body);
+    res.send(comment);
+  } catch (error) {
+    next(error)
+  }
+});
+
 
 
 
@@ -60,18 +81,6 @@ apiRouter.post('/reports', async (req, res, next) => {
  * - it should await a call to closeReport, passing in the reportId from req.params
  *   and the password from req.body
  * - on success, it should send back the object returned by closeReport
- * - on caught error, call next(error)
- */
-
-
-
-/**
- * Set up a POST request for /reports/:reportId/comments
- *
- * - it should use an async function
- * - it should await a call to createReportComment, passing in the reportId and
- *   the fields from req.body
- * - on success, it should send back the object returned by createReportComment
  * - on caught error, call next(error)
  */
 
