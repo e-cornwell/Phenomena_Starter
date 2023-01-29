@@ -75,7 +75,7 @@ describe('API', () => {
       expect(singleReportResponse.location).toEqual(singleReportQueried.location);
     });
   });
-  xdescribe('POST request for /api/reports', () => {
+  describe('POST request for /api/reports', () => {
     beforeAll(async() => {
     })
     it('on caught error, call next(error), which sends back a 500 error', async () => {

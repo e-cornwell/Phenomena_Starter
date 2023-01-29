@@ -7,7 +7,7 @@ const {
     createReportComment,
     createReport,
     closeReport,
-    _getReport 
+    _getReport, 
 } = require("../db")
 
 /**
@@ -44,6 +44,22 @@ apiRouter.get('/reports', async (req, res, next) => {
  * - on success, it should send back the object returned by createReport
  * - on caught error, call next(error)
  */
+apiRouter.post('/reports', async (req, res, next) => {
+  const { title,location,description,password = "" } = req.body;
+  const reportData = {};
+  try {
+    reportData.title = title
+    reportData.location = location
+    reportData.description = description
+    reportData.password = password
+    const request = await createReport(reportData)
+    res.send({request:request});
+   console.log(request)
+  } catch (error) {
+    next(error);
+
+  }
+});
 
 
 
