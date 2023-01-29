@@ -128,7 +128,7 @@ describe('API', () => {
       expect(deleteResponse).toEqual({message: 'Report successfully closed!'});
     });
   });
-  xdescribe('Properly handles Not Found requests', () => {
+  describe('Properly handles Not Found requests', () => {
     beforeAll(async() => {
     })
     it('Sends back 404 not found', async () => {
