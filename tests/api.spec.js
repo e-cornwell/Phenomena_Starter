@@ -101,7 +101,7 @@ describe('API', () => {
       expect(postedCommentResponse.content).toBe(commentFieldsToPost.content);
     });
   });
-  xdescribe('DELETE request for /api/reports/:reportId', () => {
+  describe('DELETE request for /api/reports/:reportId', () => {
     let deleteResponse;
     beforeAll(async() => {
     })
