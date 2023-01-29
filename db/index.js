@@ -38,7 +38,7 @@ async function getOpenReports() {
 
 async function createReport(reportFields) {
   const { title, location, description, password } = reportFields;
-
+  
   try {
     const SQL = `
       INSERT INTO reports(title, location, description, password)

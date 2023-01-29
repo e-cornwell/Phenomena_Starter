@@ -28,14 +28,12 @@ apiRouter.get('/reports', async (req, res, next) => {
       });
     } catch (error) {
       next({
-        name:'Failed to getOpenReports',
+        name:'Failed to Get Open Reports',
         message:"Request failed with status code 404"
       });
     }
   });
   
-
-
 /**
  * Set up a POST request for /reports
  *
@@ -45,19 +43,11 @@ apiRouter.get('/reports', async (req, res, next) => {
  * - on caught error, call next(error)
  */
 apiRouter.post('/reports', async (req, res, next) => {
-  const { title,location,description,password = "" } = req.body;
-  const reportData = {};
   try {
-    reportData.title = title
-    reportData.location = location
-    reportData.description = description
-    reportData.password = password
-    const request = await createReport(reportData)
-    res.send({request:request});
-   console.log(request)
+    const report = await createReport(req.body);
+    res.send(report);
   } catch (error) {
-    next(error);
-
+    next(error)
   }
 });
 
